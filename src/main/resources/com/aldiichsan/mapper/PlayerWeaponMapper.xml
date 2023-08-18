@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aldiichsan.mapper.PlayerWeaponMapper">
+    <select id="getAllWeapon" resultType="com.aldiichsan.model.PlayerWeaponModel">
+        SELECT * FROM WEAPON
+    </select>
+
+    <select id="countAllWeapon" resultType="int">
+        SELECT COUNT(*) FROM WEAPON
+    </select>
+
+    <select id="findById" resultType="com.aldiichsan.model.PlayerWeaponModel">
+        SELECT * FROM WEAPON WHERE ID = #{id}
+    </select>
+
+    <insert id="createNewWeapon" parameterType="com.aldiichsan.model.PlayerWeaponModel" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO WEAPON
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="weaponName != null or weaponName != ''">WEAPON_NAME</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="weaponName != null or weaponName != ''">#{weaponName}</if>
+        </trim>
+    </insert>
+
+    <update id="updateWeapon" parameterType="com.aldiichsan.model.PlayerWeaponModel">
+        UPDATE WEAPON SET
+        <trim suffixOverrides=",">
+            <if test="weaponName != null or weaponName != ''">WEAPON_NAME = #{weaponName}</if>
+        </trim>
+        WHERE ID = #{id}
+    </update>
+    
+    <delete id="deleteWeapon">
+        DELETE FROM WEAPON WHERE ID = #{id}
+    </delete>
+</mapper>

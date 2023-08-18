@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aldiichsan.mapper.PlayerMapper">
+    <select id="getAllPlayer" resultType="com.aldiichsan.model.PlayerSelectModel">
+        SELECT PL.ID, PL.PLAYER_NAME, CL.CLASS_NAME, WE.WEAPON_NAME, TR.TRINKET_NAME
+        FROM PLAYER PL
+        LEFT JOIN CLASS CL ON PL.CLASS_ID = CL.ID
+        LEFT JOIN WEAPON WE ON PL.WEAPON_ID = WE.ID
+        LEFT JOIN TRINKET TR ON PL.TRINKET_ID = TR.ID
+    </select>
+
+    <select id="countAllPlayer" resultType="int">
+        SELECT COUNT(*) FROM PLAYER
+    </select>
+
+    <select id="findById" resultType="com.aldiichsan.model.PlayerSelectModel">
+        SELECT PL.PLAYER_NAME, CL.CLASS_NAME, WE.WEAPON_NAME, TR.TRINKET_NAME
+        FROM PLAYER PL
+        LEFT JOIN CLASS CL ON PL.CLASS_ID = CL.ID
+        LEFT JOIN WEAPON WE ON PL.WEAPON_ID = WE.ID
+        LEFT JOIN TRINKET TR ON PL.TRINKET_ID = TR.ID
+        WHERE PL.ID = #{id}
+    </select>
+
+    <insert id="createNewPlayer" parameterType="com.aldiichsan.model.PlayerModel" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO PLAYER
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="playerName != null or playerName != ''">PLAYER_NAME,</if>
+            <if test="classId != null or classId != ''">CLASS_ID,</if>
+            <if test="weaponId != null or weaponId != ''">WEAPON_ID,</if>
+            <if test="trinketId != null or trinketId != ''">TRINKET_ID,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="playerName != null or playerName != ''">#{playerName},</if>
+            <if test="classId != null or classId != ''">#{classId},</if>
+            <if test="weaponId != null or weaponId != ''">#{weaponId},</if>
+            <if test="trinketId != null or trinketId != ''">#{trinketId},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePlayer" parameterType="com.aldiichsan.model.PlayerModel">
+        UPDATE PLAYER SET
+        <trim suffixOverrides=",">
+            <if test="playerName != null or playerName != ''">PLAYER_NAME = #{playerName},</if>
+            <if test="classId != null or classId != ''">CLASS_ID = #{classId},</if>
+            <if test="weaponId != null or weaponId != ''">WEAPON_ID = #{weaponId},</if>
+            <if test="trinketId != null or trinketId != ''">TRINKET_ID = #{trinketId}</if>
+        </trim>
+        WHERE ID = #{id}
+    </update>
+    
+    <delete id="deletePlayer">
+        DELETE FROM PLAYER WHERE ID = #{id}
+    </delete>
+</mapper>

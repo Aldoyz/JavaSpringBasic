@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aldiichsan.mapper.PlayerClassMapper">
+    <select id="getAllClass" resultType="com.aldiichsan.model.PlayerClassModel">
+        SELECT * FROM CLASS
+    </select>
+
+    <select id="countAllClass" resultType="int">
+        SELECT COUNT(*) FROM CLASS
+    </select>
+
+    <select id="findById" resultType="com.aldiichsan.model.PlayerClassModel">
+        SELECT * FROM CLASS WHERE ID = #{id}
+    </select>
+
+    <insert id="createNewClass" parameterType="com.aldiichsan.model.PlayerClassModel" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO CLASS
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="className != null or className != ''">CLASS_NAME</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="className != null or className != ''">#{className}</if>
+        </trim>
+    </insert>
+
+    <update id="updateClass" parameterType="com.aldiichsan.model.PlayerClassModel">
+        UPDATE CLASS SET
+        <trim suffixOverrides=",">
+            <if test="className != null or className != ''">CLASS_NAME = #{className}</if>
+        </trim>
+        WHERE ID = #{id}
+    </update>
+    
+    <delete id="deleteClass">
+        DELETE FROM CLASS WHERE ID = #{id}
+    </delete>
+</mapper>

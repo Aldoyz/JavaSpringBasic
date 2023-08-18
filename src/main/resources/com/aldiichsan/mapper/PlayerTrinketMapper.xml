@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aldiichsan.mapper.PlayerTrinketMapper">
+    <select id="getAllTrinket" resultType="com.aldiichsan.model.PlayerTrinketModel">
+        SELECT * FROM TRINKET
+    </select>
+
+    <select id="countAllTrinket" resultType="int">
+        SELECT COUNT(*) FROM TRINKET
+    </select>
+
+    <select id="findById" resultType="com.aldiichsan.model.PlayerTrinketModel">
+        SELECT * FROM TRINKET WHERE ID = #{id}
+    </select>
+
+    <insert id="createNewTrinket" parameterType="com.aldiichsan.model.PlayerTrinketModel" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO TRINKET
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="trinketName != null or trinketName != ''">TRINKET_NAME</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="trinketName != null or trinketName != ''">#{trinketName}</if>
+        </trim>
+    </insert>
+
+    <update id="updateTrinket" parameterType="com.aldiichsan.model.PlayerTrinketModel">
+        UPDATE TRINKET SET
+        <trim suffixOverrides=",">
+            <if test="trinketName != null or trinketName != ''">TRINKET_NAME = #{trinketName}</if>
+        </trim>
+        WHERE ID = #{id}
+    </update>
+    
+    <delete id="deleteTrinket">
+        DELETE FROM TRINKET WHERE ID = #{id}
+    </delete>
+</mapper>
