@@ -1,9 +1,11 @@
 package com.aldiichsan.service.impl;
 
+import com.aldiichsan.exception.AlreadyExistsException;
 import com.aldiichsan.exception.PlayerClassAlreadyExistsException;
 import com.aldiichsan.mapper.PlayerClassMapper;
 import com.aldiichsan.model.PlayerClassModel;
 import com.aldiichsan.service.PlayerClassService;
+import com.aldiichsan.util.ResponseMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -30,14 +32,14 @@ public class PlayerClassMybatisServiceImpl implements PlayerClassService {
     }
 
     @Override
-    public PlayerClassModel createNewClass(PlayerClassModel playerClassModel) throws Exception {
+    public PlayerClassModel createNewClass(PlayerClassModel playerClassModel) {
         try {
             playerClassMapper.createNewClass(playerClassModel);
             log.debug("generated id: {}", playerClassModel.getId());
             return playerClassModel;
         } catch (Exception e) {
             if (e instanceof DuplicateKeyException) {
-                throw new PlayerClassAlreadyExistsException("Class already exists!");
+                throw new AlreadyExistsException(ResponseMessage.DATA_ALREADY_EXISTS.getMessage());
             } else {
                 log.error("Error when create a class.", e);
                 throw e;
@@ -46,13 +48,13 @@ public class PlayerClassMybatisServiceImpl implements PlayerClassService {
     }
 
     @Override
-    public PlayerClassModel updateClass(PlayerClassModel playerClassModel) throws Exception {
+    public PlayerClassModel updateClass(PlayerClassModel playerClassModel) {
         try {
             playerClassMapper.updateClass(playerClassModel);
             return playerClassMapper.findById(playerClassModel.getId());
         } catch (Exception e) {
             if (e instanceof DuplicateKeyException) {
-                throw new PlayerClassAlreadyExistsException("Class already exists!");
+                throw new AlreadyExistsException(ResponseMessage.DATA_ALREADY_EXISTS.getMessage());
             } else {
                 log.error("Error when updating a class.", e);
                 throw e;

@@ -11,4 +11,5 @@ public interface PlayerService {
     PlayerModel createNewPlayer(PlayerModel playerModel) throws Exception;
     PlayerModel updatePlayer(PlayerModel playerModel) throws Exception;
     void deletePlayer(Long id);
+    void textException(String code);
 }

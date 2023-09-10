@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,9 +15,9 @@ public class PlayerModel {
     Long id;
     String playerName;
     Long classId;
-    String className;
+//    String className;
     Long weaponId;
-    String weaponName;
+//    String weaponName;
     Long trinketId;
-    String trinketName;
+//    String trinketName;
 }

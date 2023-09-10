@@ -1,9 +1,11 @@
 package com.aldiichsan.service.impl;
 
+import com.aldiichsan.exception.AlreadyExistsException;
 import com.aldiichsan.exception.PlayerTrinketAlreadyExistsException;
 import com.aldiichsan.mapper.PlayerTrinketMapper;
 import com.aldiichsan.model.PlayerTrinketModel;
 import com.aldiichsan.service.PlayerTrinketService;
+import com.aldiichsan.util.ResponseMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -30,14 +32,14 @@ public class PlayerTrinketMybatisServiceImpl implements PlayerTrinketService {
     }
 
     @Override
-    public PlayerTrinketModel createNewTrinket(PlayerTrinketModel playerTrinketModel) throws Exception {
+    public PlayerTrinketModel createNewTrinket(PlayerTrinketModel playerTrinketModel) {
         try {
             playerTrinketMapper.createNewTrinket(playerTrinketModel);
             log.debug("generated id: {}", playerTrinketModel.getId());
             return playerTrinketModel;
         } catch (Exception e) {
             if (e instanceof DuplicateKeyException) {
-                throw new PlayerTrinketAlreadyExistsException("Trinket already exists!");
+                throw new AlreadyExistsException(ResponseMessage.DATA_ALREADY_EXISTS.getMessage());
             } else {
                 log.error("Error when create a class.", e);
                 throw e;
@@ -46,13 +48,13 @@ public class PlayerTrinketMybatisServiceImpl implements PlayerTrinketService {
     }
 
     @Override
-    public PlayerTrinketModel updateTrinket(PlayerTrinketModel playerTrinketModel) throws Exception {
+    public PlayerTrinketModel updateTrinket(PlayerTrinketModel playerTrinketModel) {
         try {
             playerTrinketMapper.updateTrinket(playerTrinketModel);
             return playerTrinketMapper.findById(playerTrinketModel.getId());
         } catch (Exception e) {
             if (e instanceof DuplicateKeyException) {
-                throw new PlayerTrinketAlreadyExistsException("Trinket already exists!");
+                throw new AlreadyExistsException(ResponseMessage.DATA_ALREADY_EXISTS.getMessage());
             } else {
                 log.error("Error when updating a class.", e);
                 throw e;
