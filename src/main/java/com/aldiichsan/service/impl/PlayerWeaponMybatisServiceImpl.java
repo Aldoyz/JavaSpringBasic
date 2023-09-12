@@ -6,15 +6,19 @@ import com.aldiichsan.mapper.PlayerWeaponMapper;
 import com.aldiichsan.model.PlayerWeaponModel;
 import com.aldiichsan.service.PlayerWeaponService;
 import com.aldiichsan.util.ResponseMessage;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service("playerWeaponServiceMybatis")
-@Slf4j
 public class PlayerWeaponMybatisServiceImpl implements PlayerWeaponService {
+
+    private static final Logger log = LoggerFactory.getLogger(PlayerWeaponMybatisServiceImpl.class);
+
     private final PlayerWeaponMapper playerWeaponMapper;
 
     public PlayerWeaponMybatisServiceImpl(PlayerWeaponMapper playerWeaponMapper) {

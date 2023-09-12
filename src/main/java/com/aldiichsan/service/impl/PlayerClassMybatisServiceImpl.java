@@ -6,15 +6,19 @@ import com.aldiichsan.mapper.PlayerClassMapper;
 import com.aldiichsan.model.PlayerClassModel;
 import com.aldiichsan.service.PlayerClassService;
 import com.aldiichsan.util.ResponseMessage;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service("playerClassServiceMybatis")
-@Slf4j
 public class PlayerClassMybatisServiceImpl implements PlayerClassService {
+
+    private static final Logger log = LoggerFactory.getLogger(PlayerClassMybatisServiceImpl.class);
+
     private final PlayerClassMapper playerClassMapper;
 
     public PlayerClassMybatisServiceImpl(PlayerClassMapper playerClassMapper) {

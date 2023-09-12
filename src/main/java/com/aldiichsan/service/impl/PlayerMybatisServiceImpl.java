@@ -7,15 +7,18 @@ import com.aldiichsan.model.PlayerModel;
 import com.aldiichsan.model.PlayerSelectModel;
 import com.aldiichsan.service.PlayerService;
 import com.aldiichsan.util.ResponseMessage;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service("playerServiceMybatis")
-@Slf4j
 public class PlayerMybatisServiceImpl implements PlayerService {
+
+    private static final Logger log = LogManager.getLogger(PlayerMybatisServiceImpl.class);
 
     private final PlayerMapper playerMapper;
     private final ApiExceptionHandling apiExceptionHandling;

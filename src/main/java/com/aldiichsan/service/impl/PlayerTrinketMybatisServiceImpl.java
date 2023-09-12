@@ -6,15 +6,19 @@ import com.aldiichsan.mapper.PlayerTrinketMapper;
 import com.aldiichsan.model.PlayerTrinketModel;
 import com.aldiichsan.service.PlayerTrinketService;
 import com.aldiichsan.util.ResponseMessage;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service("playerTrinketServiceMybatis")
-@Slf4j
 public class PlayerTrinketMybatisServiceImpl implements PlayerTrinketService {
+
+    private static final Logger log = LoggerFactory.getLogger(PlayerTrinketMybatisServiceImpl.class);
+
     private final PlayerTrinketMapper playerTrinketMapper;
 
     public PlayerTrinketMybatisServiceImpl(PlayerTrinketMapper playerTrinketMapper) {
